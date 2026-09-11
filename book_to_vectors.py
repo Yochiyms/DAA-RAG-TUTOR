@@ -3,7 +3,6 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 import chromadb
 from sentence_transformers import SentenceTransformer
 
-# Step 1: Extract text from your DAA book PDF
 reader = PdfReader("daa_book.pdf")
 print(f"Number of pages found: {len(reader.pages)}")
 
@@ -23,7 +22,6 @@ with open("book.txt", "w", encoding="utf-8") as f:
 
 print(f"Extracted {len(text)} characters")
 
-# Step 2: Chunk the text
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=1000,
     chunk_overlap=200
@@ -31,7 +29,6 @@ splitter = RecursiveCharacterTextSplitter(
 chunks = splitter.split_text(text)
 print(f"Total chunks: {len(chunks)}")
 
-# Step 3: Generate embeddings + store in ChromaDB
 model = SentenceTransformer("all-MiniLM-L6-v2")
 client = chromadb.PersistentClient(path="./chroma_db")
 collection = client.get_or_create_collection(name="Prakhar_DAA")
